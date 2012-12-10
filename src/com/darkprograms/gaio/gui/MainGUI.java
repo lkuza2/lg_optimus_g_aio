@@ -12,9 +12,6 @@ import com.darkprograms.gaio.util.Constants;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URI;
 
 /**
@@ -329,18 +326,18 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     private void windowsDriverActionPerformed(java.awt.event.ActionEvent evt) {
-        try{
-        Desktop.getDesktop().browse(new URI(Constants.LG_DRIVER_URL));
-        }catch(Exception ex){
+        try {
+            Desktop.getDesktop().browse(new URI(Constants.LG_DRIVER_URL));
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     private void deleteTmpFiles(java.awt.event.WindowEvent evt) {
         AdbManager.getInstance().adbKill();
-        try{
-        AdbManager.getInstance().deleteTempFiles();
-        }catch(Exception ex){
+        try {
+            AdbManager.getInstance().deleteTempFiles();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
