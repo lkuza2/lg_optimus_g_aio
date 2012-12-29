@@ -4,30 +4,25 @@ echo ======================================================================
 echo = This script will root your Android phone with adb restore function =
 echo = Script by Bin4ry (thanks to Goroh_kun and tkymgr for the idea)     =
 echo =             Idea for Tablet S from Fi01_IS01                       =
-echo =                      (22.11.2012) v17                              =
+echo =                      (18.12.2012) v17                              =
 echo ======================================================================
 echo.
 :CHOICE
 set nxt=0
 set ric=0
-echo Device type:
 echo 1) Normal
 echo 2) Special (for example: Sony Tablet S, Medion Lifetab)
 echo.
 echo x) Unroot
 echo.
-set /p type=Make a choice: 
-if %type% == 1 GOTO TEST
-if %type% == 2 GOTO TABSMENU
-if %type% == x GOTO UNROOT
+echo Auto selecting choice 1
 echo.
-echo Please Enter a valid number (1 to x)
-echo.
-GOTO CHOICE
+GOTO TEST
 
 :TEST
 echo Checking if i should run in Normal Mode or special Sony Mode
 echo Please connect your device with USB-Debugging enabled now
+echo Waiting for device to shop up, if nothing happens please check if Windows ADB-drivers are installed correctly!
 stuff\adb.exe wait-for-device
 stuff\adb.exe pull /system/app/Backup-Restore.apk . > NUL
 stuff\adb.exe pull /system/bin/ric . > NUL
@@ -41,7 +36,7 @@ IF %unr% == n GOTO CHOICE
 stuff\adb.exe push stuff\busybox /data/local/tmp/busybox
 stuff\adb.exe shell "chmod 755 /data/local/tmp/busybox"
 stuff\adb.exe shell "su -c '/data/local/tmp/busybox mount -o remount,rw /system'"
-stuff\adb.exe shell "su -c 'rm /system/bin/su'"
+stuff\adb.exe shell "su -c 'rm /system/xbin/su'"
 stuff\adb.exe shell "su -c 'rm /system/app/Superuser.apk'"
 GOTO FINISH
 
