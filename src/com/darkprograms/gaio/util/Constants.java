@@ -9,6 +9,8 @@ package com.darkprograms.gaio.util;
  */
 public interface Constants {
 
+    public static String GAIO_VERSION = "1.50";
+
     public static String RESOURCES_DIR_NAME = "resources";
     public static String GAIO_DIR_NAME = "gaio";
     public static String[] RESOURCES_ADB_ARRAY = {"adb", "adb.exe", "AdbWinApi.dll", "AdbWinUsbApi.dll"};
@@ -41,5 +43,7 @@ public interface Constants {
     public static String ROOT_SUPPORTED = "<html>This software version is <font color='green'>supported and can be rooted</font></html>";
     public static String ROOT_UNSUPPORTED = "<html>This software version is <font color='red'>not supported and can not be rooted</font></html>";
 
+
+    public static String GAIO_URL_BASE = "http://gaio.dark-hosting.net/gaio/";
 
 }
