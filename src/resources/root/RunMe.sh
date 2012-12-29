@@ -4,7 +4,7 @@ echo "======================================================================"
 echo "= This script will root your Android phone with adb restore function ="
 echo "= Script by Bin4ry (thanks to Goroh_kun and tkymgr for the idea)     ="
 echo "=                 Idea for Tablet S from Fi01_IS01                   ="
-echo "=                         (22.11.2012) v17                           ="
+echo "=                         (18.12.2012) v17                           ="
 echo "=              ported to Linux by Kamistral (15.09.2012),            ="
 echo "=                   updated by codeworkx (01.10.2012)                ="
 echo "======================================================================"
@@ -16,22 +16,8 @@ choice() {
     echo "2) Special (for example: Sony Tablet S, Medion Lifetab)"
     echo "x) Unroot"
     echo "Make a choice: "
-    read type
-    case $type in
-        1*) echo "Normal mode enabled!"
-            do_test
-            ;;
-        2*) echo "Special mode enabled!"
-            tabsmenu
-            ;;
-        x*) echo "Unroot mode"
-            do_unroot
-            ;;
-        *)  clear
-            echo "Please enter a valid command (1, 2, x)"
-            choice
-            ;;
-    esac
+    echo "Auto selecting choice 1"
+    do_test
 }
 
 tabsmenu() {
@@ -109,10 +95,10 @@ do_root() {
             echo "Running ..."
             ./stuff/adb shell "while ! ln -s /data/local.prop /data/data/com.android.settings/a/file99; do :; done" > /dev/null
             echo "Successful, going to reboot your device in 10 seconds!"
-			ping -n 10 127.0.0.1 > /dev/null
+			ping -c 10 127.0.0.1 > /dev/null
             ./stuff/adb reboot
             echo "Waiting for device to show up again ..."
-            ping -n 10 127.0.0.1 > /dev/null
+            ping -c 10 127.0.0.1 > /dev/null
             ./stuff/adb wait-for-device
 			do_copy
 		fi
@@ -127,7 +113,7 @@ do_unroot() {
             ./stuff/adb push stuff/busybox /data/local/tmp/busybox
             ./stuff/adb shell "chmod 755 /data/local/tmp/busybox"
             ./stuff/adb shell "su -c '/data/local/tmp/busybox mount -o remount,rw /system'"
-            ./stuff/adb shell "su -c 'rm /system/bin/su'"
+            ./stuff/adb shell "su -c 'rm /system/xbin/su'"
             ./stuff/adb shell "su -c 'rm /system/app/Superuser.apk'"
             exit 0
             ;;
@@ -170,7 +156,7 @@ tabtrick() {
     echo "Please look at your device and click \"Restore my data\""
     echo
     ./stuff/adb shell "while [ ! -d /data/data/com.android.settings/a/file99 ] ; do echo 1; done" > /dev/null
-    ping -n 3 127.0.0.1 > /dev/null
+    ping -c 3 127.0.0.1 > /dev/null
     echo "1st RESTORE OK"
     read -p "Press [Enter] key to continue ..."
     ./stuff/adb shell "rm -r /data/data/com.android.settings/a"
@@ -179,7 +165,7 @@ tabtrick() {
     echo
     ./stuff/adb shell "while : ; do ln -s /data /data/data/com.android.settings/a/file99; [ -f /data/file99 ] && exit; done" > /dev/null
     ./stuff/adb shell "rm -r /data/file99"
-    ping -n 3 127.0.0.1 > /dev/null
+    ping -c 3 127.0.0.1 > /dev/null
     echo "Achieved!"
     read -p "Press [Enter] key to continue ..."
     ./stuff/adb shell "/data/local/tmp/busybox cp -r /data/system /data/system2"
@@ -194,7 +180,7 @@ tabtrick() {
     ./stuff/adb shell "sync; sync; sync"
     echo "Need to reboot now!"
     ./stuff/adb reboot
-    ping -n 3 127.0.0.1 > /dev/null
+    ping -c 3 127.0.0.1 > /dev/null
     echo "Waiting for device to come up again ..."
     ./stuff/adb wait-for-device
     echo "Unlock your device, a Terminal will show now, type this 2 lines, after each line press ENTER"
@@ -211,7 +197,7 @@ tabtrick() {
     ./stuff/adb shell "/data/local/tmp/script1.sh"
     echo "Almost complete! Reboot and cleanup."
     ./stuff/adb reboot
-    ping -n 3 127.0.0.1 > /dev/null
+    ping -c 3 127.0.0.1 > /dev/null
     echo "Waiting for device to come up again ..."
     ./stuff/adb wait-for-device
     ./stuff/adb shell "su -c 'rm -r /data/app2'"
@@ -267,10 +253,10 @@ xpstrick() {
     ./stuff/adb shell "while ! ln -s /data/local.prop /data/data/com.android.settings/a/file99; do :; done" > /dev/null
     echo
     echo "Good, it worked! Now we are rebooting soon, please be patient!"
-    ping -n 3 127.0.0.1 > /dev/null
+    ping -c 3 127.0.0.1 > /dev/null
     ./stuff/adb shell "rm -r /mnt/sdcard/.semc-fullbackup/RootMe"
     ./stuff/adb reboot
-    ping -n 10 127.0.0.1 > /dev/null
+    ping -c 10 127.0.0.1 > /dev/null
     echo "Waiting for device to come up again ..."
     ./stuff/adb wait-for-device
     do_copy
