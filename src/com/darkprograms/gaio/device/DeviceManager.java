@@ -27,7 +27,7 @@ public class DeviceManager {
 
 
     public boolean deviceHasRoot() {
-        return !getAdbManager().executeAdbCommand("ls /system/xbin/su").contains("not found");
+        return !getAdbManager().executeAdbCommand("ls /system/xbin/su").toLowerCase().contains("no");
     }
 
     public boolean isDeviceConnected() {
