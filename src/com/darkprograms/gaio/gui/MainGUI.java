@@ -59,8 +59,9 @@ public class MainGUI extends javax.swing.JFrame {
         refreshButton = new javax.swing.JButton();
         windowsDriver = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        rootSupported = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GAIO v1.00");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -132,6 +133,9 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel12.setText("Opens browser to LG Driver page");
 
+        rootSupported.setForeground(new java.awt.Color(238, 238, 238));
+        rootSupported.setText("This software version is supported and can be rooted");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,24 +156,29 @@ public class MainGUI extends javax.swing.JFrame {
                                                 .addContainerGap()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel3)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(phoneStatus))
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addComponent(jLabel3)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(phoneStatus))
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addComponent(jLabel6)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                                .addComponent(buildNumber)))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addComponent(jLabel4)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(phoneType))
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addGap(2, 2, 2)
+                                                                                .addComponent(jLabel8)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(softwareVersion))))
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel6)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(buildNumber)))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel4)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(phoneType))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGap(2, 2, 2)
-                                                                .addComponent(jLabel8)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(softwareVersion)))
+                                                                .addComponent(rootSupported)
+                                                                .addGap(0, 0, Short.MAX_VALUE)))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
@@ -224,7 +233,7 @@ public class MainGUI extends javax.swing.JFrame {
                                 .addComponent(windowsDriver, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,7 +252,9 @@ public class MainGUI extends javax.swing.JFrame {
                                         .addComponent(jLabel8)
                                         .addComponent(softwareVersion)
                                         .addComponent(refreshButton))
-                                .addGap(23, 23, 23))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rootSupported)
+                                .addContainerGap())
         );
 
         pack();
@@ -316,7 +327,6 @@ public class MainGUI extends javax.swing.JFrame {
             return;
         }
 
-
         if (deviceManager.deviceHasRoot()) {
             rootStatus.setText("Rooted");
             rootStatus.setForeground(Color.green);
@@ -330,6 +340,15 @@ public class MainGUI extends javax.swing.JFrame {
         buildNumber.setText(deviceManager.getBuildNumber());
         softwareVersion.setText(deviceManager.getSoftwareVersion());
 
+        if (deviceManager.isDeviceSoftwareSupported()) {
+            rootSupported.setForeground(new java.awt.Color(51, 51, 51));
+            rootSupported.setText(Constants.ROOT_SUPPORTED);
+        } else {
+            rootSupported.setForeground(new java.awt.Color(51, 51, 51));
+            rootSupported.setText(Constants.ROOT_UNSUPPORTED);
+            rootButton.setEnabled(false);
+            unlockBootloaderButton.setEnabled(false);
+        }
     }
 
     private void windowsDriverActionPerformed(java.awt.event.ActionEvent evt) {
@@ -371,6 +390,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton rootButton;
     private javax.swing.JLabel rootStatus;
+    private javax.swing.JLabel rootSupported;
     private javax.swing.JLabel softwareVersion;
     private javax.swing.JButton unlockBootloaderButton;
     private javax.swing.JButton windowsDriver;

@@ -30,6 +30,16 @@ public class DeviceManager {
         return !getAdbManager().executeAdbCommand("ls /system/xbin/su").toLowerCase().contains("no");
     }
 
+    public boolean isDeviceSoftwareSupported() {
+        int length = Constants.UNROOTABLE_VERSIONS.length;
+
+        for (int i = 0; i < length; i++) {
+            if (getBuildNumber().contains(Constants.UNROOTABLE_VERSIONS[i]))
+                return false;
+        }
+        return true;
+    }
+
     public boolean isDeviceConnected() {
         Process process = getAdbManager().executeAdb(Runtime.getRuntime(), "devices");
         int length = getAdbManager().getAdbResponse(process).split("\n").length;
