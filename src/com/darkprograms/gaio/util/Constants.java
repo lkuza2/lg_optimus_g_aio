@@ -36,5 +36,7 @@ public interface Constants {
 
     public static String LG_DRIVER_URL = "http://www.lg.com/us/support-mobile/lg-LS970";
 
+    public static String[] UNROOTABLE_VERSIONS = {"ZV9"};
+
 
 }

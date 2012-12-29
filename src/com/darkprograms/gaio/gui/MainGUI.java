@@ -253,20 +253,27 @@ public class MainGUI extends javax.swing.JFrame {
 
         RootManager.getInstance().loadRootTools();
 
-        JOptionPane.showMessageDialog(this, "<html>" +
-                "Instructions:<br>" +
-                "When terminal appears, type the number 1 for option \"1\" and then press enter.", "Root Instructions", JOptionPane.INFORMATION_MESSAGE);
+        int response = JOptionPane.showConfirmDialog(this, "<html>This will automatically root your device.<br>  " +
+                "Do not turn off your device during the process. Press \"Ok\" to continue, or \"Cancel\" to cancel.</html>", "Root", JOptionPane.OK_CANCEL_OPTION);
 
-        RootManager.getInstance().root();
+        if (response == JOptionPane.OK_OPTION) {
+            RootManager.getInstance().root();
+        }
+
         //new Thread(RootManager.getInstance()).start();
     }
 
     private void unlockBootloaderButtonActionPerformed(java.awt.event.ActionEvent evt) {
         UnlockManager.getInstance().loadUnlockTools();
 
-        JOptionPane.showMessageDialog(this, "Unlock will occure automatically. Press OK.", "Unlock Instructions", JOptionPane.INFORMATION_MESSAGE);
+        int response = JOptionPane.showConfirmDialog(this, "<html>This will automatically unlock your device.<br>" +
+                "Your device MUST be rooted to continue.<br>" +
+                "Do not turn off your device during the process. Press \"Ok\" to continue, or \"Cancel\" to cancel.</html>", "Unlock", JOptionPane.OK_CANCEL_OPTION);
 
-        UnlockManager.getInstance().unlock();
+        if (response == JOptionPane.OK_OPTION) {
+            UnlockManager.getInstance().unlock();
+        }
+
     }
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {
