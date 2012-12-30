@@ -46,4 +46,10 @@ public interface Constants {
 
     public static String GAIO_URL_BASE = "http://gaio.dark-hosting.net/gaio/";
 
+    public static String GAIO_RECOVERY_JSON = "recovery.json";
+    public static String GAIO_JSON = "gaio.json";
+    public static String GAIO_LG_DRIVER_JSON = "lgdriver.json";
+
+    public static String BOOT_IMG = "boot.img";
+
 }

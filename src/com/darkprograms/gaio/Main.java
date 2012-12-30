@@ -2,6 +2,7 @@ package com.darkprograms.gaio;
 
 import com.darkprograms.gaio.adb.AdbManager;
 import com.darkprograms.gaio.gui.MainGUI;
+import com.darkprograms.gaio.recovery.RecoveryManager;
 
 import javax.swing.*;
 
@@ -26,6 +27,7 @@ public class Main {
         MainGUI gui = new MainGUI();
         gui.setVisible(true);
         gui.setLocationRelativeTo(null);
+        System.out.println(RecoveryManager.getInstance().getRecoveries()[1]);
     }
 
 }
