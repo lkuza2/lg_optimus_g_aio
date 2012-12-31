@@ -7,7 +7,6 @@ package com.darkprograms.gaio.gui;
 import com.darkprograms.gaio.recovery.RecoveryManager;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * @author theshadow
@@ -113,22 +112,6 @@ public class RecoverySelectorGUI extends javax.swing.JDialog {
         gui.setLocationRelativeTo(this);
 
         gui.setVisible(true);
-        removeMinMaxClose(gui);
-    }
-
-    public void removeMinMaxClose(Component comp) {
-        if (comp instanceof JButton) {
-            String accName = ((JButton) comp).getAccessibleContext().getAccessibleName();
-            System.out.println(accName);
-            if (accName.equals("Maximize") || accName.equals("Iconify") ||
-                    accName.equals("Close")) comp.getParent().remove(comp);
-        }
-        if (comp instanceof Container) {
-            Component[] comps = ((Container) comp).getComponents();
-            for (int x = 0, y = comps.length; x < y; x++) {
-                removeMinMaxClose(comps[x]);
-            }
-        }
     }
 
     // Variables declaration - do not modify                     

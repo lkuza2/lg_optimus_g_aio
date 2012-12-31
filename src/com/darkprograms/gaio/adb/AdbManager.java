@@ -28,10 +28,8 @@ public class AdbManager {
 
 
     public String executeAdbCommand(String command) {
-        Runtime runtime = Runtime.getRuntime();
 
-
-        Process process = executeAdb(runtime, "shell " + command);
+        Process process = executeAdb("shell " + command);
 
 
         return getAdbResponse(process);
@@ -58,25 +56,29 @@ public class AdbManager {
         return response;
     }
 
-    public void adbReboot() {
-        Runtime runtime = Runtime.getRuntime();
+    public void adbPush(String localFilePath, String deviceFilePath) {
+        try {
+            executeAdb("push " + localFilePath + " " + deviceFilePath).waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-        executeAdb(runtime, "reboot");
+    public void adbReboot() {
+        executeAdb("reboot");
     }
 
     public void adbKill() {
-        Runtime runtime = Runtime.getRuntime();
-
-        executeAdb(runtime, "kill-server");
+        executeAdb("kill-server");
     }
 
     public void adbStart() {
-        Runtime runtime = Runtime.getRuntime();
-
-        executeAdb(runtime, "start-server");
+        executeAdb("start-server");
     }
 
-    public Process executeAdb(Runtime runtime, String extension) {
+    public Process executeAdb(String extension) {
+        Runtime runtime = Runtime.getRuntime();
+
         try {
             if (isWindows()) {
                 return runtime.exec(getTmpDir() + "/" + Constants.GAIO_DIR_NAME + "/" + "adb.exe " + extension);

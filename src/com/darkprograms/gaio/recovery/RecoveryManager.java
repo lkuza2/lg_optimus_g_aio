@@ -24,10 +24,12 @@ public class RecoveryManager {
     }
 
     private int recoveryIndex;
+    private String status;
+    private boolean complete;
 
     public String[] getRecoveries() {
         try {
-            JSONObject object = new JSONObject(new NetworkUtil().getJSON(Constants.GAIO_RECOVERY_JSON));
+            JSONObject object = new JSONObject(NetworkUtil.getInstance().getJSON(Constants.GAIO_RECOVERY_JSON));
             JSONArray array = object.getJSONArray("recovery");
             List<String> recoveries = new ArrayList<String>();
 
@@ -45,12 +47,41 @@ public class RecoveryManager {
         return null;
     }
 
+    public String getRecoveryFileName(int index) {
+        try {
+            JSONObject object = new JSONObject(NetworkUtil.getInstance().getJSON(Constants.GAIO_RECOVERY_JSON));
+            JSONArray array = object.getJSONArray("recovery");
+
+            return array.getJSONObject(index).getString("download");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
     public int getRecoveryIndex() {
         return recoveryIndex;
     }
 
     public void setRecoveryIndex(int recoveryIndex) {
         this.recoveryIndex = recoveryIndex;
+    }
+
+    public synchronized String getStatus() {
+        return status;
+    }
+
+    public synchronized void setStatus(String status) {
+        this.status = status;
+    }
+
+    public synchronized boolean isComplete() {
+        return complete;
+    }
+
+    public synchronized void setComplete(boolean complete) {
+        this.complete = complete;
     }
 
 }

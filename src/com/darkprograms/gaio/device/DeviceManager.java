@@ -83,4 +83,8 @@ public class DeviceManager {
         return AdbManager.getInstance();
     }
 
+    public String getTmpDir() {
+        return System.getProperty("java.io.tmpdir");
+    }
+
 }

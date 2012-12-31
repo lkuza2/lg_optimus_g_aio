@@ -4,6 +4,13 @@
  */
 package com.darkprograms.gaio.gui;
 
+import com.darkprograms.gaio.network.NetworkUtil;
+import com.darkprograms.gaio.recovery.RecoveryInstallThread;
+import com.darkprograms.gaio.recovery.RecoveryManager;
+
+import javax.swing.*;
+import java.text.DecimalFormat;
+
 /**
  * @author theshadow
  */
@@ -15,6 +22,7 @@ public class RecoveryInstallGUI extends javax.swing.JDialog {
     public RecoveryInstallGUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        loadRecovery();
     }
 
     /**
@@ -62,8 +70,57 @@ public class RecoveryInstallGUI extends javax.swing.JDialog {
         pack();
     }// </editor-fold>
 
+    private void loadRecovery() {
+        RecoveryManager.getInstance().setComplete(false);
+        RecoveryManager.getInstance().setStatus("");
+        new Thread(new RecoveryInstallThread()).start();
+        new Thread(new StatusHandlerThread()).start();
+    }
+
     // Variables declaration - do not modify
     private javax.swing.JProgressBar progress;
     private javax.swing.JLabel status;
     // End of variables declaration
+
+    private class StatusHandlerThread implements Runnable {
+
+        public void run() {
+            RecoveryManager recoveryManager = RecoveryManager.getInstance();
+
+            while (!recoveryManager.isComplete()) {
+
+                if (recoveryManager.getStatus().contains("Downloading")) {
+                    NetworkUtil networkUtil = NetworkUtil.getInstance();
+
+                    while (networkUtil.getLength() == 0) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        //wait
+                    }
+
+                    double totalKb = roundTwoDecimals((double) networkUtil.getLength() / 1024);
+                    double downloaded = roundTwoDecimals((double) networkUtil.getDownloaded() / 1024);
+
+                    status.setText("Downloading... " + downloaded + "/" + totalKb + " Kb");
+                    progress.setValue(networkUtil.getPercentage(networkUtil.getDownloaded(), networkUtil.getLength()));
+                } else {
+                    status.setText(recoveryManager.getStatus());
+                    progress.setIndeterminate(true);
+                }
+
+            }
+            JOptionPane.showMessageDialog(RecoveryInstallGUI.this, "Recovery installed!", "Recovery Install", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        }
+
+    }
+
+    double roundTwoDecimals(double d) {
+        DecimalFormat twoDForm = new DecimalFormat("#.##");
+        return Double.valueOf(twoDForm.format(d));
+    }
+
 }
