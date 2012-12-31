@@ -23,6 +23,8 @@ public class RecoveryManager {
 
     }
 
+    private int recoveryIndex;
+
     public String[] getRecoveries() {
         try {
             JSONObject object = new JSONObject(new NetworkUtil().getJSON(Constants.GAIO_RECOVERY_JSON));
@@ -41,6 +43,14 @@ public class RecoveryManager {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public int getRecoveryIndex() {
+        return recoveryIndex;
+    }
+
+    public void setRecoveryIndex(int recoveryIndex) {
+        this.recoveryIndex = recoveryIndex;
     }
 
 }

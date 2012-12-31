@@ -6,6 +6,7 @@ package com.darkprograms.gaio.gui;
 
 import com.darkprograms.gaio.adb.AdbManager;
 import com.darkprograms.gaio.device.DeviceManager;
+import com.darkprograms.gaio.recovery.RecoveryManager;
 import com.darkprograms.gaio.root.RootManager;
 import com.darkprograms.gaio.unlock.UnlockManager;
 import com.darkprograms.gaio.util.Constants;
@@ -60,6 +61,12 @@ public class MainGUI extends javax.swing.JFrame {
         windowsDriver = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         rootSupported = new javax.swing.JLabel();
+        installRecovery = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        restoreBoot = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GAIO v1.00");
@@ -69,7 +76,7 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("GAIO v 1.00");
+        jLabel1.setText("GAIO v 1.50");
 
         jLabel2.setText("Phone Information");
 
@@ -124,17 +131,39 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        windowsDriver.setText("Windows LG Driver");
+        windowsDriver.setText("Install Windows LG Driver");
         windowsDriver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 windowsDriverActionPerformed(evt);
             }
         });
 
-        jLabel12.setText("Opens browser to LG Driver page");
+        jLabel12.setText("Installs LG Driver (Requires Internet)");
 
         rootSupported.setForeground(new java.awt.Color(238, 238, 238));
         rootSupported.setText("This software version is supported and can be rooted");
+
+        installRecovery.setText("Install Custom Recovery");
+        installRecovery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                installRecoveryActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setText("Installs TWRP/Clockword");
+
+        jLabel14.setText("Requires Internet Connection");
+
+        restoreBoot.setText("Restore Unlocked Stock boot.img");
+        restoreBoot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restoreBootActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setText("Requires Internet Connection and Unlock");
+
+        jLabel16.setText("Requires Device Unlock");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -192,20 +221,22 @@ public class MainGUI extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(22, 22, 22)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel12)
-                                                                .addGap(0, 0, Short.MAX_VALUE))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(windowsDriver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                        .addComponent(rootButton, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                                                                        .addComponent(jLabel7)
-                                                                        .addComponent(jLabel9))
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(jLabel11)
-                                                                        .addComponent(jLabel10)
-                                                                        .addComponent(unlockBootloaderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                        .addComponent(rootButton, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel7)
+                                                        .addComponent(jLabel9)
+                                                        .addComponent(jLabel12)
+                                                        .addComponent(windowsDriver)
+                                                        .addComponent(restoreBoot)
+                                                        .addComponent(jLabel15))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(installRecovery)
+                                                        .addComponent(jLabel11)
+                                                        .addComponent(jLabel10)
+                                                        .addComponent(unlockBootloaderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel13)
+                                                        .addComponent(jLabel14)
+                                                        .addComponent(jLabel16))))
                                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -229,11 +260,26 @@ public class MainGUI extends javax.swing.JFrame {
                                                 .addComponent(jLabel7)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel9)))
-                                .addGap(41, 41, 41)
-                                .addComponent(windowsDriver, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(windowsDriver, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(installRecovery))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel12)
+                                        .addComponent(jLabel13))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel14)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel16))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(20, 20, 20)
+                                                .addComponent(restoreBoot)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -368,13 +414,32 @@ public class MainGUI extends javax.swing.JFrame {
         }
     }
 
+    private void installRecoveryActionPerformed(java.awt.event.ActionEvent evt) {
+        if (RecoveryManager.getInstance().getRecoveries() == null) {
+            JOptionPane.showMessageDialog(this, "Could not get recovery information. Are you connected to the Internet?", "Network Failure", JOptionPane.ERROR_MESSAGE);
+        } else {
+            RecoverySelectorGUI gui = new RecoverySelectorGUI(this, true);
+            gui.setLocationRelativeTo(this);
+            gui.setVisible(true);
+        }
+
+    }
+
+    private void restoreBootActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
 
     // Variables declaration - do not modify
     private javax.swing.JLabel buildNumber;
+    private javax.swing.JButton installRecovery;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -388,6 +453,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel phoneStatus;
     private javax.swing.JLabel phoneType;
     private javax.swing.JButton refreshButton;
+    private javax.swing.JButton restoreBoot;
     private javax.swing.JButton rootButton;
     private javax.swing.JLabel rootStatus;
     private javax.swing.JLabel rootSupported;
