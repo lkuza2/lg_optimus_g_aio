@@ -48,7 +48,7 @@ public class DeviceManager {
     }
 
     public boolean isDeviceConnected() {
-        Process process = getAdbManager().executeAdb(Runtime.getRuntime(), "devices");
+        Process process = getAdbManager().executeAdb("devices");
         int length = getAdbManager().getAdbResponse(process).split("\n").length;
 
         return length != 1;
