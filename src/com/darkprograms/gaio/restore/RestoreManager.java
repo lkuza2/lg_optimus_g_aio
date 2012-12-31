@@ -9,4 +9,36 @@ package com.darkprograms.gaio.restore;
  */
 public class RestoreManager {
 
+    private static RestoreManager instance;
+
+    public static RestoreManager getInstance() {
+        if (instance == null) {
+            instance = new RestoreManager();
+        }
+        return instance;
+    }
+
+    private RestoreManager() {
+
+    }
+
+    private String status;
+    private boolean complete;
+
+    public synchronized String getStatus() {
+        return status;
+    }
+
+    public synchronized void setStatus(String status) {
+        this.status = status;
+    }
+
+    public synchronized boolean isComplete() {
+        return complete;
+    }
+
+    public synchronized void setComplete(boolean complete) {
+        this.complete = complete;
+    }
+
 }

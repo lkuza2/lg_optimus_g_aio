@@ -35,6 +35,18 @@ public class AdbManager {
         return getAdbResponse(process);
     }
 
+    public String executeAdbCommandWaitFor(String command) {
+        Process process = executeAdb("shell " + command);
+
+        try {
+            process.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return getAdbResponse(process);
+    }
+
     public String getAdbResponse(Process process) {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
