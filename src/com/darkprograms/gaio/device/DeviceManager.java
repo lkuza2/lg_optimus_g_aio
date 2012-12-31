@@ -30,6 +30,13 @@ public class DeviceManager {
         return !getAdbManager().executeAdbCommand("ls /system/xbin/su").toLowerCase().contains("no");
     }
 
+    public boolean isDeviceUnlocked() {
+        if (!deviceHasRoot())
+            return false;
+
+        return getAdbManager().executeAdbCommand("dd if=/dev/block/platform/msm_sdcc.1/by-name/aboot | md5sum -").equals(Constants.UNLOCKED_ABOOT_MD5);
+    }
+
     public boolean isDeviceSoftwareSupported() {
         int length = Constants.UNROOTABLE_VERSIONS.length;
 

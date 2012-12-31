@@ -52,4 +52,6 @@ public interface Constants {
 
     public static String BOOT_IMG = "boot.img";
 
+    public static String UNLOCKED_ABOOT_MD5 = "bc54a6a730658550713a0779b30bf6b7";
+
 }
