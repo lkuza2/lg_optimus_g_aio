@@ -104,14 +104,18 @@ public class RecoverySelectorGUI extends javax.swing.JDialog {
     }
 
     private void installActionPerformed(java.awt.event.ActionEvent evt) {
-        RecoveryManager.getInstance().setRecoveryIndex(recovery.getSelectedIndex());
+        int response = JOptionPane.showConfirmDialog(this, "<html>This will install a recovery to your phone.<br>" +
+                "It is important you do not exit this program or disconnect your phone. Continue?</html>", "Recovery", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            RecoveryManager.getInstance().setRecoveryIndex(recovery.getSelectedIndex());
 
-        dispose();
+            dispose();
 
-        RecoveryInstallGUI gui = new RecoveryInstallGUI((JFrame) this.getParent(), true);
-        gui.setLocationRelativeTo(this);
+            RecoveryInstallGUI gui = new RecoveryInstallGUI((JFrame) this.getParent(), true);
+            gui.setLocationRelativeTo(this);
 
-        gui.setVisible(true);
+            gui.setVisible(true);
+        }
     }
 
     // Variables declaration - do not modify                     
