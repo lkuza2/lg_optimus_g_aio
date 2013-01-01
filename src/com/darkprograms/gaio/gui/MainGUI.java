@@ -417,6 +417,7 @@ public class MainGUI extends javax.swing.JFrame {
             restoreBoot.setEnabled(false);
             rootButton.setEnabled(false);
             unlockBootloaderButton.setEnabled(false);
+            rootSupported.setText("This software version is supported and can be rooted");
             rootSupported.setForeground(new java.awt.Color(238, 238, 238));
 
             return;
@@ -438,6 +439,7 @@ public class MainGUI extends javax.swing.JFrame {
             restoreBoot.setEnabled(false);
             rootButton.setEnabled(false);
             unlockBootloaderButton.setEnabled(false);
+            rootSupported.setText("This software version is supported and can be rooted");
             rootSupported.setForeground(new java.awt.Color(238, 238, 238));
 
             return;
