@@ -16,8 +16,8 @@ public class DriverInstallThread implements Runnable {
 
         String driverName = driverManager.getDriverName();
 
-        driverManager.setStatus("Downloading...");
         NetworkUtil.getInstance().downloadFile(driverName);
+        driverManager.setStatus("Downloading...");
 
         driverManager.setStatus("Running installer...");
 

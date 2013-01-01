@@ -17,8 +17,8 @@ public class RestoreInstallThread implements Runnable {
     public void run() {
         RestoreManager restoreManager = RestoreManager.getInstance();
 
-        restoreManager.setStatus("Downloading...");
         NetworkUtil.getInstance().downloadFile(Constants.BOOT_IMG);
+        restoreManager.setStatus("Downloading...");
 
         restoreManager.setStatus("Pushing boot.img to device...");
 

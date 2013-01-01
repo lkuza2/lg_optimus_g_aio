@@ -55,6 +55,7 @@ public class NetworkUtil {
 
     public void downloadFile(String filename) {
         try {
+            setLength(-1);
             URLConnection urlConnection = new URL(Constants.GAIO_URL_BASE + filename).openConnection();
             InputStream inputStream = urlConnection.getInputStream();
             FileOutputStream fileOutputStream = new FileOutputStream(new File(DeviceManager.getInstance().getTmpDir() + "/gaio/" + filename));
@@ -72,8 +73,6 @@ public class NetworkUtil {
 
             inputStream.close();
             fileOutputStream.close();
-
-            setLength(-1);
 
         } catch (Exception ex) {
             ex.printStackTrace();
