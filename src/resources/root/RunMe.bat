@@ -10,12 +10,14 @@ echo.
 :CHOICE
 set nxt=0
 set ric=0
+echo Device type:
 echo 1) Normal
 echo 2) Special (for example: Sony Tablet S, Medion Lifetab)
 echo.
 echo x) Unroot
 echo.
-echo Auto selecting choice 1
+echo Auto selecting option 1
+set type=1
 echo.
 GOTO TEST
 
