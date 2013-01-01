@@ -46,6 +46,7 @@ public class RecoveryInstallTask extends SwingWorker<Void, Integer> {
                 double downloaded = roundTwoDecimals((double) networkUtil.getDownloaded() / 1024);
 
                 label.setText("Downloading... " + downloaded + "/" + totalKb + " Kb");
+                progressBar.setIndeterminate(false);
                 progressBar.setValue(networkUtil.getPercentage(networkUtil.getDownloaded(), networkUtil.getLength()));
             } else {
                 label.setText(recoveryManager.getStatus());

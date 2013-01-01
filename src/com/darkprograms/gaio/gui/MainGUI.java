@@ -13,7 +13,6 @@ import com.darkprograms.gaio.util.Constants;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URI;
 
 /**
  * @author theshadow
@@ -69,7 +68,7 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("GAIO v1.00");
+        setTitle("GAIO v" + Constants.GAIO_VERSION);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 deleteTmpFiles(evt);
@@ -337,6 +336,61 @@ public class MainGUI extends javax.swing.JFrame {
         loadAdbInfo();
     }
 
+    private void windowsDriverActionPerformed(java.awt.event.ActionEvent evt) {
+        if (RecoveryManager.getInstance().getRecoveries() == null) {
+            JOptionPane.showMessageDialog(this, "Could not get LG Driver information. Are you connected to the Internet?", "Network Failure", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int response = JOptionPane.showConfirmDialog(this, "<html>This will connect to the internet and download the LG Driver.<br>" +
+                    "Would you like to download and install it?</html>", "Driver Install", JOptionPane.YES_NO_OPTION);
+            if (response == JOptionPane.YES_OPTION) {
+                DriverInstallGUI gui = new DriverInstallGUI(this, true);
+                gui.setLocationRelativeTo(this);
+                gui.setVisible(true);
+            }
+        }
+    }
+
+    private void deleteTmpFiles(java.awt.event.WindowEvent evt) {
+        AdbManager.getInstance().adbKill();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        try {
+            AdbManager.getInstance().deleteTempFiles();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void installRecoveryActionPerformed(java.awt.event.ActionEvent evt) {
+        if (RecoveryManager.getInstance().getRecoveries() == null) {
+            JOptionPane.showMessageDialog(this, "Could not get recovery information. Are you connected to the Internet?", "Network Failure", JOptionPane.ERROR_MESSAGE);
+        } else {
+            RecoverySelectorGUI gui = new RecoverySelectorGUI(this, true);
+            gui.setLocationRelativeTo(this);
+            gui.setVisible(true);
+        }
+
+    }
+
+    private void restoreBootActionPerformed(java.awt.event.ActionEvent evt) {
+        if (RecoveryManager.getInstance().getRecoveries() == null) {
+            JOptionPane.showMessageDialog(this, "Could not get boot.img information. Are you connected to the Internet?", "Network Failure", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int response = JOptionPane.showConfirmDialog(this, "<html>This will connect to the internet and download the stock unlocked boot.img<br>" +
+                    "It is important you do not close this program or disconnect your phone.<br>" +
+                    "Would you like to download and install it?</html>", "Boot Restore", JOptionPane.YES_NO_OPTION);
+            if (response == JOptionPane.YES_OPTION) {
+                RestoreInstallGUI gui = new RestoreInstallGUI(this, true);
+                gui.setLocationRelativeTo(this);
+                gui.setVisible(true);
+            }
+        }
+    }
+
+
     private void loadAdbInfo() {
         DeviceManager deviceManager = DeviceManager.getInstance();
 
@@ -395,43 +449,6 @@ public class MainGUI extends javax.swing.JFrame {
             rootButton.setEnabled(false);
             unlockBootloaderButton.setEnabled(false);
         }
-    }
-
-    private void windowsDriverActionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-            Desktop.getDesktop().browse(new URI(Constants.LG_DRIVER_URL));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private void deleteTmpFiles(java.awt.event.WindowEvent evt) {
-        AdbManager.getInstance().adbKill();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        try {
-            AdbManager.getInstance().deleteTempFiles();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private void installRecoveryActionPerformed(java.awt.event.ActionEvent evt) {
-        if (RecoveryManager.getInstance().getRecoveries() == null) {
-            JOptionPane.showMessageDialog(this, "Could not get recovery information. Are you connected to the Internet?", "Network Failure", JOptionPane.ERROR_MESSAGE);
-        } else {
-            RecoverySelectorGUI gui = new RecoverySelectorGUI(this, true);
-            gui.setLocationRelativeTo(this);
-            gui.setVisible(true);
-        }
-
-    }
-
-    private void restoreBootActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
     }
 
     // Variables declaration - do not modify
