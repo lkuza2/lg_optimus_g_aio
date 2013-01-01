@@ -81,11 +81,19 @@ public class AdbManager {
     }
 
     public void adbKill() {
-        executeAdb("kill-server");
+        try {
+            executeAdb("kill-server").waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     public void adbStart() {
-        executeAdb("start-server");
+        try {
+            executeAdb("start-server").waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     public Process executeAdb(String extension) {

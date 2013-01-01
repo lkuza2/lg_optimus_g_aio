@@ -29,7 +29,7 @@ public class NetworkUtil {
 
     }
 
-    private int length;
+    private int length = -1;
     private int downloaded;
 
     public String getJSON(String jsonFile) {
@@ -72,6 +72,8 @@ public class NetworkUtil {
 
             inputStream.close();
             fileOutputStream.close();
+
+            setLength(-1);
 
         } catch (Exception ex) {
             ex.printStackTrace();

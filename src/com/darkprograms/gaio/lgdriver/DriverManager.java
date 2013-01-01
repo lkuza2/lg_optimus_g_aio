@@ -1,10 +1,13 @@
 package com.darkprograms.gaio.lgdriver;
 
 import com.darkprograms.gaio.device.DeviceManager;
+import com.darkprograms.gaio.gui.DriverInstallGUI;
 import com.darkprograms.gaio.network.NetworkUtil;
 import com.darkprograms.gaio.util.Constants;
 import org.json.JSONObject;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 
 /**
@@ -56,9 +59,21 @@ public class DriverManager {
         Runtime runtime = Runtime.getRuntime();
 
         try {
-            runtime.exec(DeviceManager.getInstance().getTmpDir() + "/gaio/" + driverName);
+            runtime.exec("cmd /c " + DeviceManager.getInstance().getTmpDir() + "/gaio/" + driverName);
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public void checkForDriverAndInstall(Component frame) {
+        if (System.getProperty("os.name").toLowerCase().contains("windows") && !isDriverInstalled() && getDriverName() != null) {
+            int response = JOptionPane.showConfirmDialog(frame, "<html>Could not find the LG driver on your system.<br>" +
+                    "Would you like to install it?</html>", "Driver Install", JOptionPane.YES_NO_OPTION);
+            if (response == JOptionPane.YES_OPTION) {
+                DriverInstallGUI gui = new DriverInstallGUI((Frame) frame, true);
+                gui.setLocationRelativeTo(frame);
+                gui.setVisible(true);
+            }
         }
     }
 

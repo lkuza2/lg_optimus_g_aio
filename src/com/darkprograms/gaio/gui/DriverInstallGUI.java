@@ -4,12 +4,9 @@
  */
 package com.darkprograms.gaio.gui;
 
+import com.darkprograms.gaio.lgdriver.DriverInstallTask;
 import com.darkprograms.gaio.lgdriver.DriverInstallThread;
 import com.darkprograms.gaio.lgdriver.DriverManager;
-import com.darkprograms.gaio.network.NetworkUtil;
-
-import javax.swing.*;
-import java.text.DecimalFormat;
 
 /**
  * @author theshadow
@@ -74,53 +71,12 @@ public class DriverInstallGUI extends javax.swing.JDialog {
         DriverManager.getInstance().setComplete(false);
         DriverManager.getInstance().setStatus("");
         new Thread(new DriverInstallThread()).start();
-        new Thread(new StatusHandlerThread()).start();
+        new DriverInstallTask(progress, status, DriverInstallGUI.this).execute();
     }
 
     // Variables declaration - do not modify
     private javax.swing.JProgressBar progress;
     private javax.swing.JLabel status;
     // End of variables declaration
-
-    private class StatusHandlerThread implements Runnable {
-
-        public void run() {
-            DriverManager driverManager = DriverManager.getInstance();
-
-            while (!driverManager.isComplete()) {
-
-                if (driverManager.getStatus().contains("Downloading")) {
-                    NetworkUtil networkUtil = NetworkUtil.getInstance();
-
-                    while (networkUtil.getLength() == 0) {
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        //wait
-                    }
-
-                    double totalKb = roundTwoDecimals((double) networkUtil.getLength() / 1024);
-                    double downloaded = roundTwoDecimals((double) networkUtil.getDownloaded() / 1024);
-
-                    status.setText("Downloading... " + downloaded + "/" + totalKb + " Kb");
-                    progress.setValue(networkUtil.getPercentage(networkUtil.getDownloaded(), networkUtil.getLength()));
-                } else {
-                    status.setText(driverManager.getStatus());
-                    progress.setIndeterminate(true);
-                }
-
-            }
-            JOptionPane.showMessageDialog(DriverInstallGUI.this, "Driver installation started.", "Driver Install", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        }
-
-    }
-
-    double roundTwoDecimals(double d) {
-        DecimalFormat twoDForm = new DecimalFormat("#.##");
-        return Double.valueOf(twoDForm.format(d));
-    }
 
 }

@@ -2,6 +2,7 @@ package com.darkprograms.gaio;
 
 import com.darkprograms.gaio.adb.AdbManager;
 import com.darkprograms.gaio.gui.MainGUI;
+import com.darkprograms.gaio.lgdriver.DriverManager;
 import com.darkprograms.gaio.update.UpdateManager;
 
 import javax.swing.*;
@@ -30,6 +31,7 @@ public class Main {
         gui.setVisible(true);
         gui.setLocationRelativeTo(null);
 
+        DriverManager.getInstance().checkForDriverAndInstall(gui);
 
     }
 

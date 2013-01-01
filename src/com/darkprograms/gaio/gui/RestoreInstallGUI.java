@@ -4,12 +4,9 @@
  */
 package com.darkprograms.gaio.gui;
 
-import com.darkprograms.gaio.network.NetworkUtil;
+import com.darkprograms.gaio.restore.RestoreInstallTask;
 import com.darkprograms.gaio.restore.RestoreInstallThread;
 import com.darkprograms.gaio.restore.RestoreManager;
-
-import javax.swing.*;
-import java.text.DecimalFormat;
 
 /**
  * @author theshadow
@@ -74,53 +71,11 @@ public class RestoreInstallGUI extends javax.swing.JDialog {
         RestoreManager.getInstance().setComplete(false);
         RestoreManager.getInstance().setStatus("");
         new Thread(new RestoreInstallThread()).start();
-        new Thread(new StatusHandlerThread()).start();
+        new RestoreInstallTask(progress, status, RestoreInstallGUI.this).execute();
     }
 
     // Variables declaration - do not modify
     private javax.swing.JProgressBar progress;
     private javax.swing.JLabel status;
     // End of variables declaration
-
-    private class StatusHandlerThread implements Runnable {
-
-        public void run() {
-            RestoreManager restoreManager = RestoreManager.getInstance();
-
-            while (!restoreManager.isComplete()) {
-
-                if (restoreManager.getStatus().contains("Downloading")) {
-                    NetworkUtil networkUtil = NetworkUtil.getInstance();
-
-                    while (networkUtil.getLength() == 0) {
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        //wait
-                    }
-
-                    double totalKb = roundTwoDecimals((double) networkUtil.getLength() / 1024);
-                    double downloaded = roundTwoDecimals((double) networkUtil.getDownloaded() / 1024);
-
-                    status.setText("Downloading... " + downloaded + "/" + totalKb + " Kb");
-                    progress.setValue(networkUtil.getPercentage(networkUtil.getDownloaded(), networkUtil.getLength()));
-                } else {
-                    status.setText(restoreManager.getStatus());
-                    progress.setIndeterminate(true);
-                }
-
-            }
-            JOptionPane.showMessageDialog(RestoreInstallGUI.this, "Boot.img restored!", "Boot Restore", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        }
-
-    }
-
-    double roundTwoDecimals(double d) {
-        DecimalFormat twoDForm = new DecimalFormat("#.##");
-        return Double.valueOf(twoDForm.format(d));
-    }
-
 }

@@ -408,6 +408,11 @@ public class MainGUI extends javax.swing.JFrame {
     private void deleteTmpFiles(java.awt.event.WindowEvent evt) {
         AdbManager.getInstance().adbKill();
         try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        try {
             AdbManager.getInstance().deleteTempFiles();
         } catch (Exception ex) {
             ex.printStackTrace();
