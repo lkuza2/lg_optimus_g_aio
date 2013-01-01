@@ -76,7 +76,7 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("GAIO v 1.50");
+        jLabel1.setText("GAIO v " + Constants.GAIO_VERSION);
 
         jLabel2.setText("Phone Information");
 
@@ -357,7 +357,7 @@ public class MainGUI extends javax.swing.JFrame {
             return;
         }
 
-        if (deviceManager.getDeviceType().equals(Constants.SUPPORTED_DEVICE)) {
+        if (deviceManager.getDeviceType() != null && deviceManager.getDeviceType().equals(Constants.SUPPORTED_DEVICE)) {
             phoneType.setText("LG Optimus G (Sprint)");
             phoneType.setForeground(Color.green);
             rootButton.setEnabled(true);

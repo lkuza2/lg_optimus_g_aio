@@ -45,6 +45,7 @@ public interface Constants {
 
 
     public static String GAIO_URL_BASE = "http://gaio.dark-hosting.net/gaio/";
+    public static String GAIO_URL = "http://gaio.dark-hosting.net/";
 
     public static String GAIO_RECOVERY_JSON = "recovery.json";
     public static String GAIO_JSON = "gaio.json";
