@@ -18,8 +18,8 @@ public class RecoveryInstallThread implements Runnable {
 
         String recoveryName = recoveryManager.getRecoveryFileName(recoveryManager.getRecoveryIndex());
 
-        NetworkUtil.getInstance().downloadFile(recoveryName);
         recoveryManager.setStatus("Downloading...");
+        NetworkUtil.getInstance().downloadFile(recoveryName);
 
         recoveryManager.setStatus("Pushing recovery to device...");
 

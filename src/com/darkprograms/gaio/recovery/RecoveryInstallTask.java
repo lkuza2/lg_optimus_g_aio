@@ -33,7 +33,7 @@ public class RecoveryInstallTask extends SwingWorker<Void, Integer> {
             if (recoveryManager.getStatus().contains("Downloading")) {
                 NetworkUtil networkUtil = NetworkUtil.getInstance();
 
-                while (networkUtil.getLength() == -1) {
+                while (networkUtil.getLength() == 0) {
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {

@@ -33,7 +33,7 @@ public class DriverInstallTask extends SwingWorker<Void, Integer> {
             if (driverManager.getStatus().contains("Downloading")) {
                 NetworkUtil networkUtil = NetworkUtil.getInstance();
 
-                while (networkUtil.getLength() == -1) {
+                while (networkUtil.getLength() == 0) {
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
