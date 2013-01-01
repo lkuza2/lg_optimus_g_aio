@@ -34,7 +34,7 @@ public class DeviceManager {
         if (!deviceHasRoot())
             return false;
 
-        return getAdbManager().executeAdbCommand("dd if=/dev/block/platform/msm_sdcc.1/by-name/aboot | md5sum -").equals(Constants.UNLOCKED_ABOOT_MD5);
+        return getAdbManager().executeAdbCommand("dd if=/dev/block/platform/msm_sdcc.1/by-name/aboot | md5sum -").contains(Constants.UNLOCKED_ABOOT_MD5);
     }
 
     public boolean isDeviceSoftwareSupported() {
