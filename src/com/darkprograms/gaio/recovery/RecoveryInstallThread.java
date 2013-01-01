@@ -27,11 +27,11 @@ public class RecoveryInstallThread implements Runnable {
 
         recoveryManager.setStatus("Erasing recovery partition...");
 
-        AdbManager.getInstance().executeAdbCommandWaitFor("dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/recovery");
+        AdbManager.getInstance().executeAdbCommandWaitFor("su -c dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/recovery");
 
         recoveryManager.setStatus("Installing " + recoveryName + "...");
 
-        AdbManager.getInstance().executeAdbCommandWaitFor("dd if=/sdcard/" + recoveryName + "of=/dev/block/platform/msm_sdcc.1/by-name/recovery");
+        AdbManager.getInstance().executeAdbCommandWaitFor("su -c dd if=/sdcard/" + recoveryName + " of=/dev/block/platform/msm_sdcc.1/by-name/recovery");
         AdbManager.getInstance().executeAdbCommandWaitFor("rm /sdcard/" + recoveryName);
 
         recoveryManager.setStatus("Complete!");

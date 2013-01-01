@@ -35,6 +35,10 @@ public class AdbManager {
         return getAdbResponse(process);
     }
 
+    public void executeAdbCommandNoResponse(String command) {
+        Process process = executeAdb("shell " + command);
+    }
+
     public String executeAdbCommandWaitFor(String command) {
         Process process = executeAdb("shell " + command);
 

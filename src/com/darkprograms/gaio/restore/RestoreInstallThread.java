@@ -26,11 +26,11 @@ public class RestoreInstallThread implements Runnable {
 
         restoreManager.setStatus("Erasing boot partition...");
 
-        AdbManager.getInstance().executeAdbCommandWaitFor("dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/boot");
+        AdbManager.getInstance().executeAdbCommandWaitFor("su -c dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/boot");
 
         restoreManager.setStatus("Installing unlocked boot.img");
 
-        AdbManager.getInstance().executeAdbCommandWaitFor("dd if=/sdcard/boot.img of=/dev/block/platform/msm_sdcc.1/by-name/boot");
+        AdbManager.getInstance().executeAdbCommandWaitFor("su -c dd if=/sdcard/boot.img of=/dev/block/platform/msm_sdcc.1/by-name/boot");
         AdbManager.getInstance().executeAdbCommandWaitFor("rm /sdcard/boot.img");
 
         restoreManager.setStatus("Complete!");

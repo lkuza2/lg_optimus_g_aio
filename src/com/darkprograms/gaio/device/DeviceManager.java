@@ -33,8 +33,7 @@ public class DeviceManager {
     public boolean isDeviceUnlocked() {
         if (!deviceHasRoot())
             return false;
-
-        return getAdbManager().executeAdbCommand("dd if=/dev/block/platform/msm_sdcc.1/by-name/aboot | md5sum -").contains(Constants.UNLOCKED_ABOOT_MD5);
+        return getAdbManager().executeAdbCommand("su -c busybox md5sum /dev/block/platform/msm_sdcc.1/by-name/aboot").contains(Constants.UNLOCKED_ABOOT_MD5);
     }
 
     public boolean isDeviceSoftwareSupported() {

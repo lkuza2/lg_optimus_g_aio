@@ -449,6 +449,9 @@ public class MainGUI extends javax.swing.JFrame {
             rootStatus.setText("Rooted");
             rootStatus.setForeground(Color.green);
             unlockBootloaderButton.setEnabled(true);
+            JOptionPane.showMessageDialog(this, "<html>Please accept the root prompt on your phone.<br>" +
+                    "The program needs root in order to check if your device is unlocked.<br>" +
+                    "It also needs root to install recoveries and boot images.</html>", "Superuser", JOptionPane.INFORMATION_MESSAGE);
         } else {
             rootStatus.setText("Not Rooted");
             rootStatus.setForeground(Color.red);

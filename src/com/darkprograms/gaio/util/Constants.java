@@ -56,6 +56,6 @@ public interface Constants {
     public static String LG_DRIVER_PATH_X64 = "C:/Program Files (x86)/LG Electronics/LG United Mobile Driver";
     public static String LG_DRIVER_PATH_X32 = "C:/Program Files/LG Electronics/LG United Mobile Driver";
 
-    public static String UNLOCKED_ABOOT_MD5 = "bc54a6a730658550713a0779b30bf6b7";
+    public static String UNLOCKED_ABOOT_MD5 = "18fa9756649744418144585599022722";
 
 }
